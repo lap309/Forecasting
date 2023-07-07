@@ -1,0 +1,137 @@
+#https://tsanggeorge.medium.com/a-semi-auto-way-to-determine-parameters-for-sarima-model-74cdee853080
+import pandas as pd
+import numpy as np
+
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+from statsmodels.tools.eval_measures import rmse
+
+# filter away errors & warnings due to failture to converge, LU decomposition errors, etc
+import warnings
+warnings.simplefilter("ignore")
+
+################### Parameter Prep
+####### FUNCTION TO GENERATE GRID SEARCH INPUT NUMBERS
+def pdq_grid(p, d, q, m=None):
+    pdq = []
+    for i in p:
+        for j in d:
+            for k in q:
+                if m!=None:
+                    for l in m:
+                        pdq.append([i, j, k,l])
+                else:
+                    pdq.append([i,j,k])
+    return pdq
+
+# Establish possible values of the parameters
+p = [1, 2, 11]
+d = [1, 2]
+q = [1, 2, 11]
+P = [1]
+D = [0, 1, 2]
+Q = [1]
+m = [12]
+
+# Use function to create all combinations of possible values
+pdq = pdq_grid(p, d, q)
+PDQm = pdq_grid(P, D, Q, m)
+
+
+######### FUNCTION FOR SEMI-GRID-SEARCHING SARIMA
+def SARIMA_grid(train_data, order, seasonal_order):
+   
+    model_info = []                 # create an empty list to store values
+    
+    #fit the model
+    for i in order:
+        for j in seasonal_order:
+            try:
+                model = SARIMAX(endog=train_data, order=i, seasonal_order=j)
+                result = model.fit()
+                pred = result.get_prediction(test.index[0], test.index[-1]).summary_frame()['mean']
+            
+                # calculate evaluation metrics: MAPE, RMSE, AIC & BIC
+                CV_MAPE = (abs((test-pred))/(test)).mean()
+                CV_RMSE = rmse(test, pred)
+                AIC = result.aic
+                BIC = result.bic
+            
+                # create a list of order, seasonal order & evaluation metrics
+                info = [i, j, CV_MAPE, CV_RMSE, AIC, BIC]
+                model_info.append(info)
+                
+            except:
+                continue
+            
+    # create a dataframe to store info of all models
+    columns = ["order", "seasonal_order", "CV_MAPE", "CV_RMSE", "AIC", "BIC"]
+    model_info = pd.DataFrame(data=model_info, columns=columns)
+    return model_info
+
+################### RUNNING GRID SEARCH
+model_info = SARIMA_grid(train_data=train, order=pdq, seasonal_order=PDQm)
+
+#Save the results to csv
+model_info.to_csv(path_or_buf='sarima_gridsearch_results.csv')
+
+####################### Model Evaluations
+#The codes below will show the top 10 models by each metric. 
+# 10 least MAPE models
+least_MAPE = model_info.nsmallest(10, "MAPE")
+least_MAPE
+
+# 10 least RMSE models
+least_RMSE = model_info.nsmallest(10, "RMSE")
+least_RMSE
+
+# 10 least AIC models
+least_AIC = model_info.nsmallest(10, "AIC")
+least_AIC
+
+# 10 least BIC models
+least_BIC = model_info.nsmallest(10, "BIC")
+
+
+#################### Model RUNNING AND PLOTTING RESULTS
+# fit the models of least MAPE, least RMSE, least AIC/BIC & least MAPE among least AIC/BIC
+order_list = [(11,1,2), (11,1,11), (1,2,1), (2,1,1)]
+seasonal_order_list = [(1,0,1,12), (1,0,1,12), (1,2,1,12), (1,2,1,12)]
+
+#including train and test
+ts_data = df_trimmed['VALUE']
+pred_list = []
+y1 = [] # prediction confidence interval lower boundary
+y2 = [] # prediction confidence interval upper boundary
+
+for i in range(4):
+    model = SARIMAX(endog=train, order=order_list[i],
+                    seasonal_order=seasonal_order_list[i])
+    result = model.fit()
+    pred_summary = result.get_prediction(y.index[0], y.index[-1]).summary_frame()
+    pred_list.append(pred_summary['mean'])
+    y1.append(pred_summary['mean_ci_lower'][test.index])
+    y2.append(pred_summary['mean_ci_upper'][test.index])
+
+
+# visualize the results of the fitted models
+fig, axs = plt.subplots(nrows=2, ncols=2, figsize=(16,8),
+                        sharex=True, sharey=True)
+
+titles = [f"Least MAPE Model: {order_list[1]}{seasonal_order_list[1]}",
+          f"Least RMSE Model: {order_list[2]}{seasonal_order_list[2]}",
+          f"Least AIC/BIC Model: {order_list[3]}{seasonal_order_list[3]}",
+          f"Least MAPE among least AIC/BIC Model: {order_list[4]}{seasonal_order_list[4]}"]
+k = 0
+for i in range(2):
+    for j in range(2):
+        axs[i,j].plot(y, label='Ground Truth')
+        axs[i,j].plot(pred_list[k], label='Prediction')
+        axs[i,j].set_title(titles[k])
+        axs[i,0].set_ylabel('Thousand Cubic Metre')
+        axs[i,j].legend()
+        axs[i,j].axvline(test.index[0], color='black', alpha=0.5, linestyle='--')
+        axs[i,j].fill_between(x=test.index, y1=y1[k], y2=y2[k], color='orange', alpha=0.2)
+        axs[i,j].set_ylim(bottom=0, top=6000)
+        axs[i,j].set_xlim(left=y.index[0], right=y.index[-1])
+        k += 1
+plt.show()

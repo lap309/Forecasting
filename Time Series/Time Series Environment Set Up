@@ -1,0 +1,8 @@
+#### Be in timeseries environment
+conda create -n timeseries python=3.8 numpy pandas matplotlib seaborn statsmodels scikit-learn=0.24.1 jupyter jupyterlab
+ipython kernel install --name "timeseries" --user
+conda activate timeseries
+
+conda install -c plotly plotly=4.14.3
+
+conda install -c conda-forge fbprophet=0.7.1

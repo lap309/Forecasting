@@ -1,11 +1,12 @@
 # Forecasting Methods
 Naive Method:<br>
-_All forecasts for the future are equal to the last observed value of the series <br>
+_All forecasts for the future are equal to the last observed value of the series (good for economic and financial time series) <br>
 The  most revent observation is the only importnat one, and all previous observations provide no information for the future_<br>
 <br>
 Average Method:<br>
 _Future forecasts are calculated as the average of the all previous data <br>
-Assumes that all previous observations are of equal importance and reeives equal weights_
+Assumes that all previous observations are of equal importance and reeives equal weights<br>
+Ex: t_3 = avg(t_1, t_2)	    t_4 = avg( t_1, t_2, t_3)	t_5 = avg(t_1, t_2, t_3, t_4) ………._
 
 Seasonal Naïve Method: <br>
 _Each forecast is equal to the last observed value from the same season (ex: the same month of the previous year) <br>

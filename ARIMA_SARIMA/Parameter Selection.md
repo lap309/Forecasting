@@ -20,7 +20,7 @@ Differencing is a technique to transform a non-stationary time series into a sta
 It helps stabilize the mean of a time series by removing change in the level of the time series and therefore eliminating/reducing trend and seasonality, making it more stationary. The order of differencing is the number of times the series is differenced to achieve stationarity. Choosing the right order of differencing is important, because too much or too little differencing can affect the accuracy and validity of the forecasts. The typical range of d and D is [0,1,2] because second order differencing (d=2) is typically enough to make a series stationary in most cases. If the time series does not reach stationarity by econd order differencing, the data quality should be considered.
 
 For example, if you want to measure the milage on a trip day to day, the mpd may greatly vary. But the difference in miles between each day is less likely to have spikes or have as much variability, and even more so between the difference in differnce of miles per day. So differencing works by dampening the extreme values of a dataset.
-![Diffferencing Example Graphs](./graph_images/differencing_graph_example.PNG "Differencing Examples")
+![Diffferencing Example Graphs](./images/differencing_graph_example.PNG "Differencing Examples")
 
 The effect of differencing. You can see that after first order differencing, the time series is significantly more stationary than the original and the mean and variance are approximately consistent over the years. 
 
@@ -56,4 +56,4 @@ In the graph, the blue section indicates where the lags are no longer significan
 
 ##### Moving Average
 Moving averages helps by smoothing out the volatility of constantly changing data, therefore reducing trends or seasonality. Fluctuations are reduced. 
-![Moving Average Example Graphs](./graph_images/moving_average.PNG "Moving Average Example")
+![Moving Average Example Graphs](./images/moving_average.PNG "Moving Average Example")

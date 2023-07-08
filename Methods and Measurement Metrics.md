@@ -1,11 +1,11 @@
 # Forecasting Methods
 Naive Method:<br>
-_All forecasts for the future are equal to the last observed value of the series_ <br>
-_The  most revent observation is the only importnat one, and all previous observations provide no information for the future_<br>
+_All forecasts for the future are equal to the last observed value of the series <br>
+The  most revent observation is the only importnat one, and all previous observations provide no information for the future_<br>
 <br>
 Average Method:<br>
-_Future forecasts are calculated as the average of the all previous data_ <br>
-_Assumes that all previous observations are of equal importance and reeives equal weights_
+_Future forecasts are calculated as the average of the all previous data <br>
+Assumes that all previous observations are of equal importance and reeives equal weights_
 
 Seasonal Naïve Method: <br>
 _Each forecast is equal to the last observed value from the same season (ex: the same month of the previous year) <br>
@@ -18,7 +18,14 @@ _A variant on the naïve method but it allows the forecast to increase or decrea
 
 # Measurement Metrics
 
-__Sum of Squared Errors (SSE)__ [minimize]: will always select the model with the most variables so not an ideal way to selecting predictors <br>
-__Akaike's Information Criterion (AIC)__ [minimize]similar to SSE but penalizes the fit of the model based on the number of parameters that are included. The model with the minimum value of the AIC is often the best model for forecasting <br>
-__Corrected AIC:__ for small time series datasets, the AIC equation id modified with bias-corection <br>
-__Bayesian Information Criterion (BIC)__ [minimize]: similar to AIC, but implements a heavier penalization for the use of more parameters. Many statisticians like BIC because it is typically equivalent to AIC or chooses a model with slightly less variables, which is always good.
+__Sum of Squared Errors (SSE)__ [minimize]: <br>
+will always select the model with the most variables so not an ideal way to selecting predictors <br>
+<br>
+__Akaike's Information Criterion (AIC)__ [minimize]: <br>
+similar to SSE but penalizes the fit of the model based on the number of parameters that are included. The model with the minimum value of the AIC is often the best model for forecasting <br>
+<br>
+__Corrected AIC:__ <br>
+for small time series datasets, the AIC equation id modified with bias-corection <br>
+<br>
+__Bayesian Information Criterion (BIC)__ [minimize]: <br>
+similar to AIC, but implements a heavier penalization for the use of more parameters. Many statisticians like BIC because it is typically equivalent to AIC or chooses a model with slightly less variables, which is always good.

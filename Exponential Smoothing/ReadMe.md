@@ -17,7 +17,7 @@ Considerations: <br.
 Considerations: <br.
 - Start with a beta between 0.2 and 0.5 and see how it fits your data. Set it higher to reflect short-term trends.
 - If you have lots of data points. For example, daily data for more than a year, then consider a lower beta (even as low as 0.01 or 0.02).
-<br>
+
 #### γ { [0,1] (seasoning smoothing coefficient)
 A smaller gamma takes into account a longer history whereas a bigger gamma gives more weight to the recent history.
 #### Phi (damping slope)

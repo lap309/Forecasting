@@ -29,8 +29,8 @@ With some manipulation, the component form will be equivalent to the weighted av
 _Parameters:_ α, β*, trend type <br>
 This is an extension of Simple Exponential Smoothing that allows forecasting with a trend in the data <br>
 It is comprised of two components:<br>
-- Level Equation: Estimate of the values of the series by calculated the weighted average of observation y_t and the one-step-ahead training forecasts for time _t_ <br>
-- Trend Equation: Estimate of the trend (slope) of the time series at time t by calculating the weighted average of the estimated trend at time _t_ based on the previous estimate of the trend
+- Level Equation: captures the average value of the data
+- Trend Equation: captures changes in the level over time.Estimate of the trend (slope) of the time series at time t
 <br>
 __Trend Type__ <br>
 This method can specify a specific type of trend if one is available in the data <br>

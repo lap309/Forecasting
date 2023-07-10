@@ -2,16 +2,20 @@
 Forecast using weighted averages of past observations, with the weights decaying exponentially as the observations get older. The weights attached to each observation descreases exponentially as we go back in time. In other words, the more recent the observation the higher the associated weight. <br>
 Does not support exogenous variables! <br>
 <br>
-### α { [0,1]
+### Parameters
+##### α { [0,1] (level smoothing coefficient)
 is the smoothing parameter that controls the decay rate of the influence of prior data. This must be chosen/specified before running the model. <br>
 If alpha is small (close to zero), more weight is given to ohistoric observationst <br>
 If alpha ia large (closer to 1), more weight is given to the more recent observations
 <br>
-### β { [0,1]
+##### β { [0,1] (trend smoothing coefficient)
  is the smoothing parameter for trend/slope that controls the decay of the influence of the change in trend. Smaller value of β means a smaller slope and smaller change over time <br>
 <br>
  These parameters are often choosen based off of previous experience or, more reliably and objectively, estimated from the observed data. These can be estimated by minimizing the Sum of Square Errors (SSE), although this involves an optimization tool
 <br>
+#### Gamma (seasoning smoothing coefficient)
+#### Phi (damping slope)
+
 <br>
 ### Simple exponential smoothing (SES) (stationary)
 _Parameters:_ α <br>

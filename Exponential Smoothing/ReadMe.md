@@ -5,15 +5,22 @@ Does not support exogenous variables! <br>
 ### Parameters
 #### α { [0,1] (level smoothing coefficient)
 is the smoothing parameter that controls the decay rate of the influence of prior data. This must be chosen/specified before running the model. <br>
-If alpha is small (close to zero), more weight is given to ohistoric observationst <br>
-If alpha ia large (closer to 1), more weight is given to the more recent observations
+If alpha is small (close to zero), more weight is given to historic observationst <br>
+If alpha ia large (closer to 1), more weight is given to the more recent observations<br>
+Considerations: <br.
+- Start with a beta between 0.2 and 0.5 and see how it fits your data. Set it higher to reflect short-term trends.
+- If you have lots of data points. For example, daily data for more than a year, then consider a lower beta (even as low as 0.01 or 0.02).
+<br>
 <br>
 #### β { [0,1] (trend smoothing coefficient)
- is the smoothing parameter for trend/slope that controls the decay of the influence of the change in trend. Smaller value of β means a smaller slope and smaller change over time <br>
-<br>
+ is the smoothing parameter for trend/slope that controls the decay of the influence of the change in trend. Smaller value of β means a smaller slope and smaller change over time. Best for long term trends. A larger value focus on shorter-term trend. <br>
  These parameters are often choosen based off of previous experience or, more reliably and objectively, estimated from the observed data. These can be estimated by minimizing the Sum of Square Errors (SSE), although this involves an optimization tool
+Considerations: <br.
+- Start with a beta between 0.2 and 0.5 and see how it fits your data. Set it higher to reflect short-term trends.
+- If you have lots of data points. For example, daily data for more than a year, then consider a lower beta (even as low as 0.01 or 0.02).
 <br>
-#### Gamma (seasoning smoothing coefficient)
+#### γ { [0,1] (seasoning smoothing coefficient)
+A smaller gamma takes into account a longer history whereas a bigger gamma gives more weight to the recent history.
 #### Phi (damping slope)
 
 ### Simple exponential smoothing (SES) (stationary)
@@ -34,7 +41,7 @@ This is an extension of Simple Exponential Smoothing that allows forecasting wit
 It is comprised of two components:<br>
 - Level Equation: captures the average value of the data
 - Trend Equation: captures changes in the level over time.Estimate of the trend (slope) of the time series at time t
-<br>
+
 __Trend Type__ <br>
 This method can specify a specific type of trend if one is available in the data <br>
 - Additive Trend: the trend is linear AKA Holt's Linear Model <br>

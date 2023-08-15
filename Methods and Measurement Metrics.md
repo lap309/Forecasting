@@ -30,3 +30,12 @@ for small time series datasets, the AIC equation id modified with bias-corection
 <br>
 __Bayesian Information Criterion (BIC)__ [minimize]: <br>
 similar to AIC, but implements a heavier penalization for the use of more parameters. Many statisticians like BIC because it is typically equivalent to AIC or chooses a model with slightly less variables, which is always good.
+
+__Root Mean Squared Error (RMSE)__ [minimize]: <br>
+Used to gauge the average distance (error) between the predicted value and the actual value. Typically used in predictive models. KEEP IN MIND, that while we want the RMSE to generally be lower, the data is still subject to uncertainty/randomness/noise, and thus a lower RMSE score does not always gaurantee a better model. For this reason, it is advised to combine RMSE scores with visualizations to explain how the model performs.
+
+Compute the error (the difference between the predicted and actual) for each observation<br>
+Square the errors. This is done because the difference will be positive or negative depending on the observation,  and we want to avoid having a zero summation. <br>
+Summate the squared errors <br>
+Divide by the total number of observations (to compute the mean. This is the Mean Squared Error)
+Take the square root to get the RMSE
